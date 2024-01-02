@@ -14,6 +14,23 @@ let backgroundImage, spaceshipImage, bulletImage, enemyImage, gameOverImage;
 let spaceshipX = canvas.width / 2 - 32;
 let spaceshipY = canvas.height - 64;
 
+//총알
+let bulletList = [] //총알 저장 리스트
+function Bullet(){
+        this.x = 0;
+        this.y = 0;
+        this.init = function(){
+            this.x = spaceshipX + 20;
+            this.y = spaceshipY;
+
+            bulletList.push(this);
+        };
+        this.update = function(){
+            this.y -= 7;
+
+    }
+}
+
 function loadImage(){
     backgroundImage = new Image();
     backgroundImage.src = "images/background.gif"
@@ -46,8 +63,9 @@ function setupKeyboardListener(){
     }); 
 }
 
-function createBullet(){
-    
+function createBullet(){ // 단순화 위해 클래스 대신 함수 사용
+    let b = new Bullet() // 총알 하나 생성
+    b.init();
 }
 
 function update(){
@@ -70,6 +88,10 @@ function update(){
 function render(){
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY);
+
+    for(let i =0; i < bulletList.length; i++){
+        ctx.drawImage(bulletImage,bulletList[i].x,bulletList[i].y)
+    }
 }
 
 function main(){
