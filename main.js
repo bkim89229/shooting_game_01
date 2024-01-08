@@ -36,7 +36,7 @@ function Bullet() {
       if (
         this.y <= enemyList[i].y &&
         this.x >= enemyList[i].x &&
-        this.x <= enemyList[i].x + 40
+        this.x <= enemyList[i].x + 40 //40은 적군 이미지 크기
       ) {
         score++; //총알&적군 소멸 -> 점수획득
         this.alive = false;
