@@ -140,7 +140,7 @@ function update() {
   // 총알 y좌표 업뎃하는 함수 호출
   for (let i = 0; i < bulletList.length; i++) {
     // 이 조건이 없다면, 화면상에서 총알이 사라져도 계속 적용되어서 적군1 뒤에 오는 적군2도 사라지는 오류 발생
-    if (bulletList[i.alive]) {
+    if (bulletList[i].alive) {
       bulletList[i].update();
       bulletList[i].checkHit();
     }
