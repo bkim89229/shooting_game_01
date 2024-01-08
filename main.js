@@ -62,7 +62,7 @@ function Enemy() {
     enemyList.push(this);
   };
   this.update = function () {
-    this.y += 4; // 적군 속도 조절
+    this.y += 3; // 적군 속도 조절
 
     if (this.y >= canvas.height - 40) {
       // 우주선 세로값 48인데 화면 바닥에 적군이 닿으려면 40
@@ -111,12 +111,12 @@ function createBullet() {
   b.init();
 }
 
+//적군생성 함수 - setInterval(호출하고싶은 함수, 시간)
 function createEnemy() {
   const interval = setInterval(function () {
-    //적군생성 함수 --- setInterval(호출하고싶은 함수, 시간)
     let e = new Enemy();
     e.init();
-  }, 1000); // 1000 -> 1초를 의미
+  }, 1200); // 1000 -> 1초를 의미
 }
 
 function update() {
@@ -176,7 +176,7 @@ function main() {
     render(); //그려주고
     requestAnimationFrame(main);
   } else {
-    ctx.drawImage(gameOverImage, 10, 100, 380, 380);
+    ctx.drawImage(gameOverImage, 10, 150, 380, 380);
   }
 }
 
