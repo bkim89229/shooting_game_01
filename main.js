@@ -12,8 +12,8 @@ let gameOver = false; //true 게임끝, false 킵고잉
 let score = 0;
 
 //우주선 좌표
-let spaceshipX = canvas.width / 2 - 32;
-let spaceshipY = canvas.height - 64;
+let spaceshipX = canvas.width / 2 - 24;
+let spaceshipY = canvas.height - 48;
 
 //총알
 let bulletList = []; //총알 저장 리스트
@@ -22,7 +22,7 @@ function Bullet() {
   this.x = 0;
   this.y = 0;
   this.init = function () {
-    this.x = spaceshipX + 20;
+    this.x = spaceshipX + 14;
     this.y = spaceshipY;
     this.alive = true; // true 총알생존, false 총알소멸??
     bulletList.push(this);
@@ -38,7 +38,7 @@ function Bullet() {
         this.x >= enemyList[i].x &&
         this.x <= enemyList[i].x + 40
       ) {
-        score++;  //총알&적군 소멸 -> 점수획득
+        score++; //총알&적군 소멸 -> 점수획득
         this.alive = false;
         enemyList.splice(i, 1);
       }
@@ -64,7 +64,8 @@ function Enemy() {
   this.update = function () {
     this.y += 4; // 적군 속도 조절
 
-    if (this.y >= canvas.height - 48) {  // 우주선 세로값 48
+    if (this.y >= canvas.height - 40) {
+      // 우주선 세로값 48인데 화면 바닥에 적군이 닿으려면 40
       gameOver = true;
     }
   };
@@ -89,11 +90,13 @@ function loadImage() {
 
 let keysDown = {};
 function setupKeyboardListener() {
-  document.addEventListener("keydown", function (event) {  //스페이스바 누르고 있을때
+  document.addEventListener("keydown", function (event) {
+    //스페이스바 누르고 있을때
     keysDown[event.keyCode] = true;
-  }); 
-  
-  document.addEventListener("keyup", function (event) {  //스페이스바 안 누름
+  });
+
+  document.addEventListener("keyup", function (event) {
+    //스페이스바 안 누름
     delete keysDown[event.keyCode];
 
     if (event.keyCode == 32) {
@@ -102,32 +105,36 @@ function setupKeyboardListener() {
   });
 }
 
-function createBullet() {  // 단순화 위해 클래스 대신 함수 사용
-  let b = new Bullet();  // 총알 하나 생성
+function createBullet() {
+  // 단순화 위해 클래스 대신 함수 사용
+  let b = new Bullet(); // 총알 하나 생성
   b.init();
 }
 
 function createEnemy() {
-  const interval = setInterval(function () {  //적군생성 함수 --- setInterval(호출하고싶은 함수, 시간)
+  const interval = setInterval(function () {
+    //적군생성 함수 --- setInterval(호출하고싶은 함수, 시간)
     let e = new Enemy();
     e.init();
   }, 1000); // 1000 -> 1초를 의미
 }
 
 function update() {
-  if (39 in keysDown) {  //right
+  if (39 in keysDown) {
+    //right
     spaceshipX += 5; //우주선 속도 조절
-  } 
-  if (37 in keysDown) {  // left
+  }
+  if (37 in keysDown) {
+    // left
     spaceshipX -= 5;
-  } 
+  }
 
   //우주선 좌표값이 무한대로 업데이트되는걸 막으려면
   if (spaceshipX <= 0) {
     spaceshipX = 0;
   }
-  if (spaceshipX >= canvas.width - 64) {
-    spaceshipX = canvas.width - 64; //- 64 : 배경이미지 밖에서 그려지는 것 방지
+  if (spaceshipX >= canvas.width - 48) {
+    spaceshipX = canvas.width - 48; //- 48 : 배경이미지 밖에서 그려지는 것 방지
   }
 
   // 총알 y좌표 업뎃하는 함수 호출
@@ -148,7 +155,7 @@ function update() {
 function render() {
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY);
-  ctx.fillText(`Score:${score}`, 20, 20);
+  ctx.fillText(`Score:${score}`, 5, 20);
   ctx.font = "20px Arial";
   ctx.fillStyle = "white";
 
@@ -178,8 +185,6 @@ setupKeyboardListener();
 createEnemy();
 main();
 
-
-
 /* 코드 작성시 고려사항 */
 // 방향키를 누르면
 // 우주선의 xy 좌표가 바뀌고
@@ -205,5 +210,3 @@ main();
 // 총알.y <= 적군.y
 // 총알.x >= 적군.x && 총알.x <= 적군.x + 적군의 넓이
 // -> 닿았다 -> 총알&적군 없어짐 -> 점수획득
-
-
