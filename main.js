@@ -84,7 +84,7 @@ function loadImage() {
   enemyImage.src = "images/enemy.png";
 
   gameOverImage = new Image();
-  gameOverImage.src = "images/gameover.jpg";
+  gameOverImage.src = "images/gameover.png";
 }
 
 let keysDown = {};
