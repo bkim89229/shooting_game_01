@@ -31,6 +31,12 @@ function Bullet() {
     this.y -= 7;
   };
 
+ // 화면상단 벗어난 총알 비활성화 <<개인적으로 추가한 부분>>
+    if (this.y < 0) {
+      this.alive = false;
+    }
+  };
+
   this.checkHit = function () {
     for (let i = 0; i < enemyList.length; i++) {
       if (
