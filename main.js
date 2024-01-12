@@ -7,7 +7,13 @@ canvas.width = 400;
 canvas.height = 700;
 document.body.appendChild(canvas);
 
-let backgroundImage, spaceshipImage, bulletImage, enemyImage, gameOverImage;
+let backgroundImage,
+  startImage,
+  spaceshipImage,
+  bulletImage,
+  enemyImage,
+  gameOverImage,
+  retryButtonImage;
 let gameOver = false; //true 게임끝, false 킵고잉
 let score = 0;
 
@@ -30,7 +36,7 @@ function Bullet() {
   this.update = function () {
     this.y -= 7;
 
- // 화면상단 벗어난 총알 비활성화 <<개인적으로 추가한 부분>>
+    // 화면상단 벗어난 총알 비활성화 <<개인적으로 추가한 부분>>
     if (this.y < 0) {
       this.alive = false;
     }
@@ -76,9 +82,13 @@ function Enemy() {
   };
 }
 
+//이미지 로드
 function loadImage() {
   backgroundImage = new Image();
   backgroundImage.src = "images/background.jpg";
+
+  startImage = new Image();
+  startImage.src = "images/start.png";
 
   spaceshipImage = new Image();
   spaceshipImage.src = "images/spaceship.png";
@@ -91,8 +101,40 @@ function loadImage() {
 
   gameOverImage = new Image();
   gameOverImage.src = "images/gameover.png";
+
+  retryButtonImage = new Image();
+  retryButtonImage.src = "images/retry.png";
 }
 
+//마우스
+function setupMouseListeners() {
+  canvas.addEventListener("click", function (event) {
+    if (gameOver) {
+      let rect = canvas.getBoundingClientRect();
+      let x = event.clientX - rect.left;
+      let y = event.clientY - rect.top;
+
+      // 재시도 버튼 영역 내 클릭인지 확인
+      if (x > canvas.width - 60 && x < canvas.width - 10 && y > 10 && y < 60) {
+        restartGame();
+      }
+    }
+  });
+}
+
+// 게임 상태 초기화
+function restartGame() {
+  gameOver = false;
+  score = 0;
+  spaceshipX = canvas.width / 2 - 24;
+  spaceshipY = canvas.height - 48;
+  bulletList = [];
+  enemyList = [];
+
+  requestAnimationFrame(main); // 게임 재시작
+}
+
+//키보드
 let keysDown = {};
 function setupKeyboardListener() {
   document.addEventListener("keydown", function (event) {
@@ -110,13 +152,13 @@ function setupKeyboardListener() {
   });
 }
 
+//총알생성 - 단순화 위해 클래스 대신 함수 사용
 function createBullet() {
-  // 단순화 위해 클래스 대신 함수 사용
-  let b = new Bullet(); // 총알 하나 생성
+  let b = new Bullet(); // 한 개 생성!
   b.init();
 }
 
-//적군생성 함수 - setInterval(호출하고싶은 함수, 시간)
+//적군생성 - setInterval(호출하고싶은 함수, 시간)
 function createEnemy() {
   const interval = setInterval(function () {
     let e = new Enemy();
@@ -182,10 +224,19 @@ function main() {
     requestAnimationFrame(main);
   } else {
     ctx.drawImage(gameOverImage, 10, 150, 380, 380);
+    // ctx.fillText("Retry", canvas.width - 55, 20); // 캔버스 우측 상단에 위치
+    ctx.drawImage(
+      retryButtonImage,
+      canvas.width - 60, // 캔버스 너비에서 버튼 너비를 뺀 값
+      10, // 상단 모서리에 위치 (y = 0)
+      50,
+      50
+    ); // 버튼 위치 조정
   }
 }
 
 loadImage();
+setupMouseListeners();
 setupKeyboardListener();
 createEnemy();
 main();

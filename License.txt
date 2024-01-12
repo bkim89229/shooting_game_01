@@ -23,3 +23,11 @@ Image by <a href="https://www.freepik.com/free-vector/flat-design-pixel-food-ill
 //화면배경
 <a href="https://www.freepik.com/free-vector/video-game-controls-neon-style-brick-wall_5688466.htm#query=Pacman&position=21&from_view=search&track=sph&uuid=cf3be5e5-59c1-4d1d-ac11-e4f713c5447e">Image by gstudioimagen</a> on Freepik
 
+//게임 시작 화면
+<a href="https://www.freepik.com/free-vector/pixel-space-game-interface-with-start-button_26348347.htm#page=2&query=replay%20pixel&position=11&from_view=search&track=ais&uuid=05d38d99-cc67-4d0f-a4d2-c4c1196d0080">Image by brgfx</a> on Freepik
+
+//재시도 버튼
+<a href="https://www.freepik.com/icon/refresh_2651465">Icon by Ilham Fitrotul Hayat</a>
+
+Image by <a href="https://www.freepik.com/free-vector/set-colorful-arrows-mark-flat-style_2091030.htm#query=retry%20button&position=18&from_view=search&track=ais&uuid=1bbb9d09-7cfd-403b-8ffa-0815e00bbbf6">Freepik</a>
+
