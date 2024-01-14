@@ -217,10 +217,23 @@ function render() {
   }
 }
 
+// main 함수 시작 시간 (함수 밖에서 선언)
+let startTime = new Date();
+
+//시간측정 함수
+function checkElapsedTime() {
+  var currentTime = new Date();
+  var elapsedTime = (currentTime - startTime) / 1000; // 밀리초 -> 초 변환
+  return elapsedTime;
+}
+
 function main() {
   if (!gameOver) {
     update(); // 좌표값을 업데이트하고
     render(); //그려주고
+    if (checkElapsedTime() < 1) {
+      ctx.drawImage(startImage, 25, 250, 350, 200);
+    }
     requestAnimationFrame(main);
   } else {
     ctx.drawImage(gameOverImage, 10, 150, 380, 380);
