@@ -14,8 +14,22 @@ let backgroundImage,
   enemyImage,
   gameOverImage,
   retryButtonImage;
-let gameOver = false; //true 게임끝, false 킵고잉
+
+//시작종료 & 스테이지(개인적으로 추가한 부분)
 let score = 0;
+let currentStage = 1;
+let scoreForNextStage = 2;
+let gameOver = false; //true 게임끝, false 킵고잉
+
+// main 함수 시작 시간 (함수 밖에서 선언)
+let startTime = new Date();
+
+//시간측정 함수
+function checkElapsedTime() {
+  var currentTime = new Date();
+  var elapsedTime = (currentTime - startTime) / 1000; // 밀리초 -> 초 변환
+  return elapsedTime;
+}
 
 //우주선 좌표
 let spaceshipX = canvas.width / 2 - 24;
@@ -36,7 +50,7 @@ function Bullet() {
   this.update = function () {
     this.y -= 7;
 
-    // 화면상단 벗어난 총알 비활성화 <<개인적으로 추가한 부분>>
+    // 화면상단 벗어난 총알 비활성화(개인적으로 추가한 부분)
     if (this.y < 0) {
       this.alive = false;
     }
@@ -64,6 +78,11 @@ function generateRandomValue(min, max) {
 }
 
 let enemyList = [];
+
+//적군의 초기 속도/이미지를 전역 변수로 선언
+let enemySpeed = 3;
+let enemyImageSrc = "images/enemy.png";
+
 function Enemy() {
   this.x = 0;
   this.y = 0;
@@ -73,7 +92,7 @@ function Enemy() {
     enemyList.push(this);
   };
   this.update = function () {
-    this.y += 3; // 적군 속도 조절
+    this.y += enemySpeed; // 적군 속도 조절 (개인적으로 수정한 부분, 스테이지 변경위해 전역변수 사용함)
 
     if (this.y >= canvas.height - 40) {
       // 우주선 세로값 48인데 화면 바닥에 적군이 닿으려면 40
@@ -97,13 +116,55 @@ function loadImage() {
   bulletImage.src = "images/bullet.png";
 
   enemyImage = new Image();
-  enemyImage.src = "images/enemy.png";
+  enemyImage.src = enemyImageSrc;
 
   gameOverImage = new Image();
   gameOverImage.src = "images/gameover.png";
 
   retryButtonImage = new Image();
   retryButtonImage.src = "images/retry.png";
+}
+
+// 게임 상태 초기화
+function restartGame() {
+  gameOver = false;
+  score = 0;
+  spaceshipX = canvas.width / 2 - 24;
+  spaceshipY = canvas.height - 48;
+  bulletList = [];
+  enemyList = [];
+
+  requestAnimationFrame(main); // 게임 재시작
+}
+
+function checkStageClear() {
+  if (score >= scoreForNextStage) {
+    currentStage++;
+    // scoreForNextStage += 100; // 다음 스테이지 점수 증가
+    goToNextStage();
+  }
+}
+
+// 스테이지 클리어 시 액션 구현
+function goToNextStage() {
+  alert(`Stage ${currentStage - 1} Clear! Welcome to Stage ${currentStage}`);
+  enemySpeed += 1; //적군 속도 증가
+
+  // 스테이지 클리어 시 적군 이미지 변경
+  switch (currentStage) {
+    case 2:
+      enemyImageSrc = "images/enemy_stage2.png";
+      break;
+    case 3:
+      enemyImageSrc = "images/enemy_stage3.png";
+      break;
+    default:
+      enemyImageSrc = "images/enemy.png"; // 초기이미지
+  }
+
+  // 적군 이미지 새로 로드
+  enemyImage = new Image();
+  enemyImage.src = enemyImageSrc;
 }
 
 //마우스
@@ -120,18 +181,6 @@ function setupMouseListeners() {
       }
     }
   });
-}
-
-// 게임 상태 초기화
-function restartGame() {
-  gameOver = false;
-  score = 0;
-  spaceshipX = canvas.width / 2 - 24;
-  spaceshipY = canvas.height - 48;
-  bulletList = [];
-  enemyList = [];
-
-  requestAnimationFrame(main); // 게임 재시작
 }
 
 //키보드
@@ -186,7 +235,8 @@ function update() {
 
   // 총알 y좌표 업뎃하는 함수 호출
   for (let i = 0; i < bulletList.length; i++) {
-    // 이 조건이 없다면, 화면상에서 총알이 사라져도 계속 적용되어서 적군1 뒤에 오는 적군2도 사라지는 오류 발생
+    // 이 조건이 없다면, 화면상에서 적군과 충돌한 총알이 사라져도
+    // 계속 적용되어서 적군1 다음에 등장하는 적군2도 사라지는 오류 발생
     if (bulletList[i].alive) {
       bulletList[i].update();
       bulletList[i].checkHit();
@@ -217,19 +267,10 @@ function render() {
   }
 }
 
-// main 함수 시작 시간 (함수 밖에서 선언)
-let startTime = new Date();
-
-//시간측정 함수
-function checkElapsedTime() {
-  var currentTime = new Date();
-  var elapsedTime = (currentTime - startTime) / 1000; // 밀리초 -> 초 변환
-  return elapsedTime;
-}
-
 function main() {
   if (!gameOver) {
     update(); // 좌표값을 업데이트하고
+    checkStageClear(); // 점수 & 스테이지 클리어 체크
     render(); //그려주고
     if (checkElapsedTime() < 1) {
       ctx.drawImage(startImage, 25, 250, 350, 200);
