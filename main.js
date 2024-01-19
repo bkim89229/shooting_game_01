@@ -18,7 +18,7 @@ let backgroundImage,
 //시작종료 & 스테이지(개인적으로 추가한 부분)
 let score = 0;
 let currentStage = 1;
-let scoreForNextStage = 2;
+let scoreForNextStage = 5;
 let gameOver = false; //true 게임끝, false 킵고잉
 
 // main 함수 시작 시간 (함수 밖에서 선언)
@@ -80,7 +80,7 @@ function generateRandomValue(min, max) {
 let enemyList = [];
 
 //적군의 초기 속도/이미지를 전역 변수로 선언
-let enemySpeed = 3;
+let enemySpeed = 2;
 let enemyImageSrc = "images/enemy.png";
 
 function Enemy() {
@@ -137,10 +137,11 @@ function restartGame() {
   requestAnimationFrame(main); // 게임 재시작
 }
 
+// 스테이지 클리어 확인
 function checkStageClear() {
   if (score >= scoreForNextStage) {
     currentStage++;
-    // scoreForNextStage += 100; // 다음 스테이지 점수 증가
+    scoreForNextStage += scoreForNextStage * 2; // 해당코드추가 -> 스테이지별 이미지&속도 변경 가능해짐 -> 왜???
     goToNextStage();
   }
 }
@@ -148,7 +149,7 @@ function checkStageClear() {
 // 스테이지 클리어 시 액션 구현
 function goToNextStage() {
   alert(`Stage ${currentStage - 1} Clear! Welcome to Stage ${currentStage}`);
-  enemySpeed += 1; //적군 속도 증가
+  enemySpeed++; //적군 속도 증가
 
   // 스테이지 클리어 시 적군 이미지 변경
   switch (currentStage) {
