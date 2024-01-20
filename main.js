@@ -148,7 +148,6 @@ function checkStageClear() {
 
 // 스테이지 클리어 시 액션 구현
 function goToNextStage() {
-  alert(`Stage ${currentStage - 1} Clear! Welcome to Stage ${currentStage}`);
   enemySpeed++; //적군 속도 증가
 
   // 스테이지 클리어 시 적군 이미지 변경
