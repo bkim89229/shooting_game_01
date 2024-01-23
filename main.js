@@ -217,32 +217,24 @@ function createEnemy() {
   }, 1200); // 1000 -> 1초를 의미
 }
 
-
-function setupKeyboardListener() {
-  document.addEventListener("keydown", function (event) {
-    keysDown[event.keyCode] = true;
-  });
-
-  document.addEventListener("keyup", function (event) {
-    delete keysDown[event.keyCode];
-
-    if (event.keyCode == 32) {
-      createBullet();
-    }
-  });
-}
-
-
 function update() {
+  //right
   if (39 in keysDown) {
-    //right
     spaceshipX += 5; //우주선 속도 조절
   }
+  // left
   if (37 in keysDown) {
-    // left
     spaceshipX -= 5;
   }
-
+  // up
+  if (38 in keysDown) { 
+    spaceshipY -= 5;
+  }
+  // down
+  if (40 in keysDown) { 
+    spaceshipY += 5;
+  }
+  
   //우주선 좌표값이 무한대로 업데이트되는걸 막으려면
   if (spaceshipX <= 0) {
     spaceshipX = 0;
