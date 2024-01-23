@@ -235,12 +235,19 @@ function update() {
     spaceshipY += 5;
   }
   
-  //우주선 좌표값이 무한대로 업데이트되는걸 막으려면
+  //우주선 좌표값이 캔버스 범위를 벗어나지 않도록 제한 (좌우)
   if (spaceshipX <= 0) {
     spaceshipX = 0;
   }
   if (spaceshipX >= canvas.width - 48) {
     spaceshipX = canvas.width - 48; //- 48 : 배경이미지 밖에서 그려지는 것 방지
+  }
+  //우주선 좌표값이 캔버스 범위를 벗어나지 않도록 제한 (상하) << 추가한부
+  if (spaceshipY <= 0) {
+    spaceshipY = 0;
+  }
+  if (spaceshipY >= canvas.height - 48) {
+    spaceshipY = canvas.height - 48;
   }
 
   // 총알 y좌표 업뎃하는 함수 호출
