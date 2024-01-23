@@ -175,6 +175,8 @@ function setupMouseListeners() {
       let x = event.clientX - rect.left;
       let y = event.clientY - rect.top;
 
+       console.log(x, y); // 클릭된 좌표 출력
+
       // 재시도 버튼 영역 내 클릭인지 확인
       if (x > canvas.width - 60 && x < canvas.width - 10 && y > 10 && y < 60) {
         restartGame();
