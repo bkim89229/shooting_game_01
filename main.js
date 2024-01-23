@@ -217,6 +217,22 @@ function createEnemy() {
   }, 1200); // 1000 -> 1초를 의미
 }
 
+
+function setupKeyboardListener() {
+  document.addEventListener("keydown", function (event) {
+    keysDown[event.keyCode] = true;
+  });
+
+  document.addEventListener("keyup", function (event) {
+    delete keysDown[event.keyCode];
+
+    if (event.keyCode == 32) {
+      createBullet();
+    }
+  });
+}
+
+
 function update() {
   if (39 in keysDown) {
     //right
