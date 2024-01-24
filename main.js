@@ -80,7 +80,7 @@ function generateRandomValue(min, max) {
 let enemyList = [];
 
 //적군의 초기 속도/이미지를 전역 변수로 선언
-let enemySpeed = 2;
+let enemySpeed = 1;
 let enemyImageSrc = "images/enemy.png";
 
 function Enemy() {
@@ -96,6 +96,18 @@ function Enemy() {
 
     if (this.y >= canvas.height - 40) {
       // 우주선 세로값 48인데 화면 바닥에 적군이 닿으려면 40
+      gameOver = true;
+    }
+
+    // 적군과 우주선이 닿으면 게임오버 (개인적으로 추가한 부분)
+    // : 우주선크기(48)대로 설정하면,
+    // -> 적군과 우주선이 떨어져 있어도 게임이 종료되는 경우 발생
+    if (
+      this.x < spaceshipX + 25 &&
+      this.x + 25 > spaceshipX &&
+      this.y < spaceshipY + 25 &&
+      this.y + 25 > spaceshipY
+    ) {
       gameOver = true;
     }
   };
@@ -175,7 +187,7 @@ function setupMouseListeners() {
       let x = event.clientX - rect.left;
       let y = event.clientY - rect.top;
 
-       console.log(x, y); // 클릭된 좌표 출력
+      console.log(x, y); // 클릭된 좌표 출력
 
       // 재시도 버튼 영역 내 클릭인지 확인
       if (x > canvas.width - 60 && x < canvas.width - 10 && y > 10 && y < 60) {
@@ -227,14 +239,14 @@ function update() {
     spaceshipX -= 5;
   }
   // up
-  if (38 in keysDown) { 
+  if (38 in keysDown) {
     spaceshipY -= 5;
   }
   // down
-  if (40 in keysDown) { 
+  if (40 in keysDown) {
     spaceshipY += 5;
   }
-  
+
   //우주선 좌표값이 캔버스 범위를 벗어나지 않도록 제한 (좌우)
   if (spaceshipX <= 0) {
     spaceshipX = 0;
