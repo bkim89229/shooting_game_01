@@ -59,6 +59,7 @@ function Bullet() {
   this.checkHit = function () {
     for (let i = 0; i < enemyList.length; i++) {
       if (
+        this.y >= enemyList[i].y - 40 && // 이 부분이 없으면 우주선이 캔버스 상단에서 총알 발사할 때, 이미 우주선 위치를 지나친 적군이 소멸되는 오류 발생
         this.y <= enemyList[i].y &&
         this.x >= enemyList[i].x &&
         this.x <= enemyList[i].x + 40 //40은 적군 이미지 크기
