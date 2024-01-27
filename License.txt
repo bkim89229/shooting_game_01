@@ -31,3 +31,7 @@ Image by <a href="https://www.freepik.com/free-vector/flat-design-pixel-food-ill
 
 Image by <a href="https://www.freepik.com/free-vector/set-colorful-arrows-mark-flat-style_2091030.htm#query=retry%20button&position=18&from_view=search&track=ais&uuid=1bbb9d09-7cfd-403b-8ffa-0815e00bbbf6">Freepik</a>
 
+
+//효과음
+Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6104">Pixabay</a>
+Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6008">Pixabay</a>

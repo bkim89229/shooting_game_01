@@ -7,6 +7,7 @@ canvas.width = 400;
 canvas.height = 700;
 document.body.appendChild(canvas);
 
+//이미지 변수 설정
 let backgroundImage,
   startImage,
   spaceshipImage,
@@ -14,6 +15,9 @@ let backgroundImage,
   enemyImage,
   gameOverImage,
   retryButtonImage;
+
+//효과음 변수 설정
+let boomSound, gameoverSound;
 
 //시작종료 & 스테이지(개인적으로 추가한 부분)
 let score = 0;
@@ -67,6 +71,8 @@ function Bullet() {
         score++; //총알&적군 소멸 -> 점수획득
         this.alive = false;
         enemyList.splice(i, 1);
+        // 효과음 재생 (개인적으로 추가한 부분)
+        boomSound.play();
       }
     }
   };
@@ -136,6 +142,12 @@ function loadImage() {
 
   retryButtonImage = new Image();
   retryButtonImage.src = "images/retry.png";
+}
+
+// 음원로드
+function loadSound() {
+  boomSound = new Audio("src/boom.mp3");
+  gameoverSound = new Audio("src/gameover.mp3");
 }
 
 // 게임 상태 초기화
@@ -316,10 +328,12 @@ function main() {
       50,
       50
     ); // 버튼 위치 조정
+    gameoverSound.play();
   }
 }
 
 loadImage();
+loadSound();
 setupMouseListeners();
 setupKeyboardListener();
 createEnemy();
