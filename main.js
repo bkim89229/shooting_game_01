@@ -166,7 +166,7 @@ function restartGame() {
 function checkStageClear() {
   if (score >= scoreForNextStage) {
     currentStage++;
-    scoreForNextStage += scoreForNextStage * 2; // 해당코드추가 -> 스테이지별 이미지&속도 변경 가능해짐 -> 왜???
+    scoreForNextStage += scoreForNextStage * 1; // 해당코드추가 -> 스테이지별 이미지&속도 변경 가능해짐 -> 왜???
     goToNextStage();
   }
 }
@@ -294,7 +294,8 @@ function update() {
 function render() {
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY);
-  ctx.fillText(`Score:${score}`, 5, 20);
+  ctx.fillText(`Stage:${currentStage}`, 5, 20);
+  ctx.fillText(`Score:${score}`, 310, 20);
   ctx.font = "20px Arial";
   ctx.fillStyle = "white";
 
