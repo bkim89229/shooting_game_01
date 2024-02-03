@@ -154,6 +154,7 @@ function loadSound() {
 function restartGame() {
   gameOver = false;
   score = 0;
+  currentStage = 1;
   spaceshipX = canvas.width / 2 - 24;
   spaceshipY = canvas.height - 48;
   bulletList = [];
