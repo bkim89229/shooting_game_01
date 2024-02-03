@@ -194,7 +194,7 @@ function goToNextStage() {
 
 //마우스
 function setupMouseListeners() {
-  canvas.addEventListener("click", function (event) {
+  document.addEventListener("click", function (event) {
     if (gameOver) {
       let rect = canvas.getBoundingClientRect();
       let x = event.clientX - rect.left;
@@ -294,8 +294,7 @@ function update() {
 function render() {
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY);
-  ctx.fillText(`Stage:${currentStage}`, 5, 20);
-  ctx.fillText(`Score:${score}`, 310, 20);
+  ctx.fillText(`Stage:${currentStage} || Score:${score}`, 5, 20);
   ctx.font = "20px Arial";
   ctx.fillStyle = "white";
 
